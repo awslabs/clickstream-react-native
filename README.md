@@ -1,17 +1,31 @@
-## My Project
+# clickstream-react-native
 
-TODO: Fill this README out!
+ClickstreamAnalytics React Native SDK
 
-Be sure to:
+## Installation
 
-* Change the title in this README
-* Edit your repository description on GitHub
+```sh
+npm install clickstream-react-native
+```
 
-## Security
+## Usage
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+```js
+import { multiply } from 'clickstream-react-native';
+
+// ...
+
+const result = await multiply(3, 7);
+```
+
+## Contributing
+
+See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
 ## License
 
-This project is licensed under the Apache-2.0 License.
+MIT
 
+---
+
+Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
