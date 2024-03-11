@@ -57,7 +57,7 @@ export class ClickstreamAnalytics {
         return false;
       });
     }
-    return ClickstreamReactNative.init(initConfiguration);
+    return ClickstreamReactNative.configure(initConfiguration);
   }
 
   public static record(event: ClickstreamEvent) {
