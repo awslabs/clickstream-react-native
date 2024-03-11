@@ -44,7 +44,7 @@
     "url": "git+https://github.com/awslabs/clickstream-react-native.git.git"
   },
   "author": "xiaoweii <xiaoweii@amazom.com> (https://github.com/awslabs/clickstream-react-native.git)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/awslabs/clickstream-react-native.git/issues"
   },
