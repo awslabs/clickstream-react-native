@@ -98,9 +98,7 @@
 		"android/build.gradle",
 		"android/gradle.properties",
 		"ios/Clickstream/Sources",
-		"ios/ClickstreamReactNative-Bridging-Header.h",
-		"ios/ClickstreamReactNative.mm",
-		"ios/ClickstreamReactNative.swift",
+		"ios/ClickstreamReactNative*",
 		"*.podspec",
 		"!**/__tests__",
 		"!**/.*"
