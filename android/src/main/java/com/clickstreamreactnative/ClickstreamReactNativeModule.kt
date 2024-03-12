@@ -38,7 +38,7 @@ class ClickstreamReactNativeModule(reactContext: ReactApplicationContext) :
     }
 
     @ReactMethod
-    fun init(map: ReadableMap, promise: Promise) {
+    fun configure(map: ReadableMap, promise: Promise) {
         if (isInitialized) {
             promise.resolve(false)
         }

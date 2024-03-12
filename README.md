@@ -11,11 +11,12 @@ npm install clickstream-react-native
 ## Usage
 
 ```js
-import { multiply } from 'clickstream-react-native';
+import { ClickstreamAnalytics } from 'clickstream-react-native';
 
-// ...
-
-const result = await multiply(3, 7);
+const result = await ClickstreamAnalytics.configure({
+	appId: 'your appId',
+	endpoint: 'your endpoint',
+});
 ```
 
 ## Contributing
@@ -25,7 +26,3 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 ## License
 
 Apache-2.0
-
----
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
