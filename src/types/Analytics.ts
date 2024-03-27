@@ -12,13 +12,16 @@
  */
 
 export interface ClickstreamConfiguration extends Configuration {
-  readonly appId: string;
-  readonly endpoint: string;
+  appId: string;
+  endpoint: string;
   readonly sendEventsInterval?: number;
   readonly sessionTimeoutDuration?: number;
+  readonly globalAttributes?: ClickstreamAttribute;
 }
 
 export interface Configuration {
+  appId?: string;
+  endpoint?: string;
   isLogEvents?: boolean;
   isCompressEvents?: boolean;
   authCookie?: string;
@@ -28,7 +31,7 @@ export interface Configuration {
 }
 
 export interface ClickstreamAttribute {
-  [key: string]: string | number | boolean | null;
+  [key: string]: string | number | boolean;
 }
 
 export interface Item {
@@ -47,7 +50,7 @@ export interface Item {
   category4?: string;
   category5?: string;
 
-  [key: string]: string | number | boolean | null | undefined;
+  [key: string]: string | number | boolean | undefined;
 }
 
 export interface ClickstreamEvent {

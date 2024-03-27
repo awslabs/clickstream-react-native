@@ -12,6 +12,7 @@
  */
 import { NativeModules, Platform } from 'react-native';
 import type { ClickstreamConfiguration, ClickstreamEvent } from './types';
+import { ClickstreamAttribute, Configuration } from './types';
 
 const LINKING_ERROR =
   `The package 'clickstream-react-native' doesn't seem to be linked. Make sure: \n\n` +
@@ -31,13 +32,7 @@ const ClickstreamReactNative = NativeModules.ClickstreamReactNative
     );
 
 export class ClickstreamAnalytics {
-  public static multiply(a: number, b: number): Promise<number> {
-    return ClickstreamReactNative.multiply(a, b);
-  }
-
-  public static configure(
-    configuration: ClickstreamConfiguration
-  ): Promise<boolean> {
+  public static init(configure: ClickstreamConfiguration): Promise<boolean> {
     let initConfiguration: ClickstreamConfiguration = {
       appId: '',
       endpoint: '',
@@ -50,20 +45,63 @@ export class ClickstreamAnalytics {
       sessionTimeoutDuration: 1800000,
       authCookie: '',
     };
-    Object.assign(initConfiguration, configuration);
+    Object.assign(initConfiguration, configure);
     if (initConfiguration.appId === '' || initConfiguration.endpoint === '') {
       console.log('Please configure your appId and endpoint');
-      return new Promise(() => {
-        return false;
-      });
+      return Promise.resolve(false);
     }
-    return ClickstreamReactNative.configure(initConfiguration);
+    return ClickstreamReactNative.init(initConfiguration);
   }
 
   public static record(event: ClickstreamEvent) {
-    if (event.name === null || event.name === '') {
+    if (event.name === undefined || event.name === null || event.name === '') {
       console.log('Please set your event name');
+      return;
     }
     ClickstreamReactNative.record(event);
+  }
+
+  public static setUserId(userId: string | null) {
+    ClickstreamReactNative.setUserId(userId);
+  }
+
+  public static setUserAttributes(userAttributes: ClickstreamAttribute) {
+    if (this.isNotEmpty(userAttributes)) {
+      ClickstreamReactNative.setUserAttributes(userAttributes);
+    }
+  }
+
+  public static setGlobalAttributes(globalAttributes: ClickstreamAttribute) {
+    if (this.isNotEmpty(globalAttributes)) {
+      ClickstreamReactNative.setGlobalAttributes(globalAttributes);
+    }
+  }
+
+  public static deleteGlobalAttributes(globalAttributes: string[]) {
+    if (globalAttributes.length > 0) {
+      ClickstreamReactNative.deleteGlobalAttributes(globalAttributes);
+    }
+  }
+
+  public static updateConfigure(configure: Configuration) {
+    if (this.isNotEmpty(configure)) {
+      ClickstreamReactNative.updateConfigure(configure);
+    }
+  }
+
+  public static flushEvents() {
+    ClickstreamReactNative.flushEvents();
+  }
+
+  public static disable() {
+    ClickstreamReactNative.disable();
+  }
+
+  public static enable() {
+    ClickstreamReactNative.enable();
+  }
+
+  static isNotEmpty(obj: any): boolean {
+    return obj !== undefined && obj !== null && Object.keys(obj).length > 0;
   }
 }

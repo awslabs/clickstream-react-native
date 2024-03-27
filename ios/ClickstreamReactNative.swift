@@ -8,33 +8,35 @@ import Amplify
 
 @objc(ClickstreamReactNative)
 class ClickstreamReactNative: NSObject {
-    @objc(multiply::::)
-    func multiply(a: Float, b: Float, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
-        resolve(a * b)
-    }
+    var isInitialized = false
 
-    @objc(configure:::)
-    func configure(arguments: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+    @objc(init:::)
+    func `init`(arguments: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        if isInitialized {
+            resolve(false)
+            return
+        }
         do {
-            let plugins: [String: JSONValue] = [
-                "awsClickstreamPlugin": [
-                    "appId": JSONValue.string(arguments["appId"] as! String),
-                    "endpoint": JSONValue.string(arguments["endpoint"] as! String),
-                    "isCompressEvents": JSONValue.boolean(arguments["isCompressEvents"] as! Bool),
-                    "autoFlushEventsInterval": JSONValue.number(arguments["sendEventsInterval"] as! Double),
-                    "isTrackAppExceptionEvents": JSONValue.boolean(arguments["isTrackAppExceptionEvents"] as! Bool)
-                ]
-            ]
-            let analyticsConfiguration = AnalyticsCategoryConfiguration(plugins: plugins)
-            let config = AmplifyConfiguration(analytics: analyticsConfiguration)
-            try Amplify.add(plugin: AWSClickstreamPlugin())
-            try Amplify.configure(config)
-            let configure = try ClickstreamAnalytics.getClickstreamConfiguration()
-            configure.isLogEvents = arguments["isLogEvents"] as! Bool
-            configure.isTrackScreenViewEvents = arguments["isTrackScreenViewEvents"] as! Bool
-            configure.isTrackUserEngagementEvents = arguments["isTrackUserEngagementEvents"] as! Bool
-            configure.sessionTimeoutDuration = arguments["sessionTimeoutDuration"] as! Int64
-            configure.authCookie = arguments["authCookie"] as? String
+            let configuration = ClickstreamConfiguration()
+                .withAppId(arguments["appId"] as! String)
+                .withEndpoint(arguments["endpoint"] as! String)
+                .withLogEvents(arguments["isLogEvents"] as! Bool)
+                .withTrackScreenViewEvents(arguments["isTrackScreenViewEvents"] as! Bool)
+                .withTrackUserEngagementEvents(arguments["isTrackUserEngagementEvents"] as! Bool)
+                .withTrackAppExceptionEvents(arguments["isTrackAppExceptionEvents"] as! Bool)
+                .withSendEventInterval(arguments["sendEventsInterval"] as! Int)
+                .withSessionTimeoutDuration(arguments["sessionTimeoutDuration"] as! Int64)
+                .withCompressEvents(arguments["isCompressEvents"] as! Bool)
+                .withAuthCookie(arguments["authCookie"] as! String)
+            if arguments["globalAttributes"] != nil {
+                let attributes = arguments["globalAttributes"] as! [String: Any]
+                if attributes.count > 0 {
+                    let globalAttributes = getClickstreamAttributes(attributes)
+                    _ = configuration.withInitialGlobalAttributes(globalAttributes)
+                }
+            }
+            try ClickstreamAnalytics.initSDK(configuration)
+            isInitialized = true
             resolve(true)
         } catch {
             log.error("Fail to initialize ClickstreamAnalytics: \(error)")
@@ -45,12 +47,12 @@ class ClickstreamReactNative: NSObject {
     @objc(record:::)
     func record(arguments: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
         let eventName = arguments["name"] as! String
-        let attributes = arguments["attributes"] as! [String: Any]
-        let items = arguments["items"] as! [[String: Any]]
+        let attributes = arguments["attributes"] as? [String: Any] ?? [:]
+        let items = arguments["items"] as? [[String: Any]]
         if attributes.count > 0 {
-            if items.count > 0 {
+            if items != nil, items!.count > 0 {
                 var clickstreamItems: [ClickstreamAttribute] = []
-                for itemObject in items {
+                for itemObject in items! {
                     clickstreamItems.append(getClickstreamAttributes(itemObject))
                 }
                 ClickstreamAnalytics.recordEvent(eventName, getClickstreamAttributes(attributes), clickstreamItems)
@@ -60,6 +62,82 @@ class ClickstreamReactNative: NSObject {
         } else {
             ClickstreamAnalytics.recordEvent(eventName)
         }
+    }
+
+    @objc(setUserId:::)
+    func setUserId(userId: String?, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        ClickstreamAnalytics.setUserId(userId)
+    }
+
+    @objc(setUserAttributes:::)
+    func setUserAttributes(arguments: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        let userAttributes = getClickstreamAttributes(arguments)
+        if userAttributes.count > 0 {
+            ClickstreamAnalytics.addUserAttributes(getClickstreamAttributes(arguments))
+        }
+    }
+
+    @objc(setGlobalAttributes:::)
+    func setGlobalAttributes(arguments: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        let globalAttributes = getClickstreamAttributes(arguments)
+        if globalAttributes.count > 0 {
+            ClickstreamAnalytics.addGlobalAttributes(getClickstreamAttributes(arguments))
+        }
+    }
+
+    @objc(deleteGlobalAttributes:::)
+    func deleteGlobalAttributes(arguments: [String], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        for attribute in arguments {
+            ClickstreamAnalytics.deleteGlobalAttributes(attribute)
+        }
+    }
+
+    @objc(updateConfigure:::)
+    func updateConfigure(arguments: [String: Any], resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        do {
+            let configuration = try ClickstreamAnalytics.getClickstreamConfiguration()
+            if let appId = arguments["appId"] as? String {
+                configuration.appId = appId
+            }
+            if let endpoint = arguments["endpoint"] as? String {
+                configuration.endpoint = endpoint
+            }
+            if let isLogEvents = arguments["isLogEvents"] as? Bool {
+                configuration.isLogEvents = isLogEvents
+            }
+            if let isTrackScreenViewEvents = arguments["isTrackScreenViewEvents"] as? Bool {
+                configuration.isTrackScreenViewEvents = isTrackScreenViewEvents
+            }
+            if let isTrackUserEngagementEvents = arguments["isTrackUserEngagementEvents"] as? Bool {
+                configuration.isTrackUserEngagementEvents = isTrackUserEngagementEvents
+            }
+            if let isTrackAppExceptionEvents = arguments["isTrackAppExceptionEvents"] as? Bool {
+                configuration.isTrackAppExceptionEvents = isTrackAppExceptionEvents
+            }
+            if let isCompressEvents = arguments["isCompressEvents"] as? Bool {
+                configuration.isCompressEvents = isCompressEvents
+            }
+            if let authCookie = arguments["authCookie"] as? String {
+                configuration.authCookie = authCookie
+            }
+        } catch {
+            log.error("Failed to config ClickstreamAnalytics: \(error)")
+        }
+    }
+
+    @objc(flushEvents::)
+    func flushEvents(resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        ClickstreamAnalytics.flushEvents()
+    }
+
+    @objc(disable::)
+    func disable(resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        ClickstreamAnalytics.disable()
+    }
+
+    @objc(enable::)
+    func enable(resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
+        ClickstreamAnalytics.enable()
     }
 
     func getClickstreamAttributes(_ attrs: [String: Any]) -> ClickstreamAttribute {

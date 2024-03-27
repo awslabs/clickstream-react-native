@@ -1,70 +1,180 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
+} from 'react-native';
 import { ClickstreamAnalytics } from 'clickstream-react-native';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-  const [initResult, setInitResult] = React.useState<boolean | undefined>();
-
-  React.useEffect(() => {
-    ClickstreamAnalytics.multiply(3, 7).then(setResult);
-    ClickstreamAnalytics.configure({
-      appId: '123',
-      endpoint: 'https://example.com/collect',
+  const initSDK = async () => {
+    const res = await ClickstreamAnalytics.init({
+      appId: 'shopping',
+      endpoint:
+        'http://Clicks-Inges-GMCZD4cV3Xyp-634383170.us-east-1.elb.amazonaws.com/collect',
       isLogEvents: true,
-      sendEventsInterval: 8000,
-      isTrackScreenViewEvents: false,
+      sendEventsInterval: 10000,
+      isTrackScreenViewEvents: true,
       isCompressEvents: false,
-      sessionTimeoutDuration: 20000,
-    }).then(setInitResult);
-
+      sessionTimeoutDuration: 30000,
+      globalAttributes: {
+        channel: 'Samsung',
+        Class: 5,
+        isTrue: true,
+        Score: 24.32,
+      },
+    });
+    console.log('init result is:' + res);
+  };
+  const recordEventWithName = () => {
     ClickstreamAnalytics.record({
-      name: 'button_click',
+      name: 'testEventWithName',
+    });
+  };
+  const recordEventWithAttributes = () => {
+    ClickstreamAnalytics.record({
+      name: 'testEventWithAttributes',
+      attributes: {
+        category: 'shoes',
+        intValue: 13,
+        boolValue: true,
+        value: 279.9,
+      },
+    });
+  };
+  const recordEventWithItems = () => {
+    ClickstreamAnalytics.record({
+      name: 'product_view',
       attributes: {
         category: 'shoes',
         currency: 'CNY',
-        intValue: 13,
-        longValue: 99999999139919,
-        doubleValue: 11.1234567890121213,
-        boolValue: true,
-        value: 279.9,
+        price: 279.9,
       },
       items: [
         {
           id: '1',
-          name: 'testName1',
-          brand: 'Google',
+          name: 'boy shoes',
+          brand: 'Nike',
           currency: 'CNY',
-          category: 'book',
+          category: 'shoes',
           locationId: '1',
-          intValue: 13,
-          longValue: 99999999139919,
-          doubleValue: 11.1234567890121213,
-          boolValue: true,
-          value: 279.9,
         },
       ],
     });
+  };
+  const setUserId = () => {
+    ClickstreamAnalytics.setUserId('123');
+  };
+
+  const setUserIdNull = () => {
+    ClickstreamAnalytics.setUserId(null);
+  };
+
+  const setUserAttributes = () => {
+    ClickstreamAnalytics.setUserAttributes({
+      category: 'shoes',
+      currency: 'CNY',
+      value: 279.9,
+    });
+    ClickstreamAnalytics.setUserAttributes({});
+  };
+  const setGlobalAttributes = () => {
+    ClickstreamAnalytics.setGlobalAttributes({});
+    ClickstreamAnalytics.setGlobalAttributes({
+      channel: 'Samsung',
+      Class: 5,
+      isTrue: true,
+      Score: 24.32,
+    });
+  };
+
+  const deleteGlobalAttributes = () => {
+    ClickstreamAnalytics.deleteGlobalAttributes(['Class', 'isTrue', 'Score']);
+    ClickstreamAnalytics.deleteGlobalAttributes(['']);
+  };
+  const updateConfigure = () => {
+    ClickstreamAnalytics.updateConfigure({
+      appId: 'shopping1',
+      endpoint: 'https://example.com/collect',
+      isLogEvents: true,
+      isCompressEvents: false,
+      isTrackUserEngagementEvents: false,
+      isTrackAppExceptionEvents: false,
+      authCookie: 'test cookie',
+      isTrackScreenViewEvents: false,
+    });
+  };
+
+  const flushEvents = () => {
+    ClickstreamAnalytics.flushEvents();
+  };
+
+  const disable = () => {
+    ClickstreamAnalytics.disable();
+  };
+
+  const enable = () => {
+    ClickstreamAnalytics.enable();
+  };
+
+  React.useEffect(() => {
+    initSDK().then(() => {});
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-      <Text>Init SDK Result: {initResult ? 'success' : 'false'}</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <ListItem title="initSDK" onPress={initSDK} />
+        <ListItem title="recordEventWithName" onPress={recordEventWithName} />
+        <ListItem
+          title="recordEventWithAttributes"
+          onPress={recordEventWithAttributes}
+        />
+        <ListItem title="recordEventWithItems" onPress={recordEventWithItems} />
+        <ListItem title="setUserId" onPress={setUserId} />
+        <ListItem title="setUserIdNull" onPress={setUserIdNull} />
+        <ListItem title="setUserAttributes" onPress={setUserAttributes} />
+        <ListItem title="setGlobalAttributes" onPress={setGlobalAttributes} />
+        <ListItem
+          title="deleteGlobalAttributes"
+          onPress={deleteGlobalAttributes}
+        />
+        <ListItem title="updateConfigure" onPress={updateConfigure} />
+        <ListItem title="flushEvents" onPress={flushEvents} />
+        <ListItem title="disable" onPress={disable} />
+        <ListItem title="enable" onPress={enable} />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
+interface ListItemProps {
+  title: string;
+  onPress: () => void;
+}
+
+const ListItem: React.FC<ListItemProps> = ({ title, onPress }) => (
+  <TouchableOpacity style={styles.listItem} onPress={onPress}>
+    <Text style={styles.title}>{title}</Text>
+  </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 20,
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+  listItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  title: {
+    fontSize: 16,
   },
 });

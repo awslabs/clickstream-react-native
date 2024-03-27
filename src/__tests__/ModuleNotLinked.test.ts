@@ -10,20 +10,20 @@
  *  OR CONDITIONS OF ANY KIND, express or implied. See the License for the specific language governing permissions
  *  and limitations under the License.
  */
-package com.clickstreamreactnative
+import { ClickstreamAnalytics } from '../index';
 
-import com.facebook.react.ReactPackage
-import com.facebook.react.bridge.NativeModule
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.uimanager.ViewManager
-
-
-class ClickstreamReactNativePackage : ReactPackage {
-  override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
-    return listOf(ClickstreamReactNativeModule(reactContext))
-  }
-
-  override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
-    return emptyList()
-  }
-}
+describe('ModuleNotLinked test', () => {
+  test('test init SDK when native module unlinked', async () => {
+    try {
+      await ClickstreamAnalytics.init({
+        appId: 'testAppId',
+        endpoint: 'https://example.com/collect',
+      });
+      fail('test failed, should throw linking error');
+    } catch (error) {
+      expect((error as any).message).toContain(
+        "The package 'clickstream-react-native' doesn't seem to be linked"
+      );
+    }
+  });
+});
