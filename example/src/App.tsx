@@ -7,7 +7,7 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-import { ClickstreamAnalytics } from 'clickstream-react-native';
+import { ClickstreamAnalytics, Item } from 'clickstream-react-native';
 
 export default function App() {
   const initSDK = async () => {
@@ -45,7 +45,26 @@ export default function App() {
       },
     });
   };
+
+  const recordCustomScreenViewEvents = () => {
+    ClickstreamAnalytics.record({
+      name: ClickstreamAnalytics.Event.SCREEN_VIEW,
+      attributes: {
+        [ClickstreamAnalytics.Attr.SCREEN_NAME]: 'HomeComponent',
+        [ClickstreamAnalytics.Attr.SCREEN_UNIQUE_ID]: '123adf',
+      },
+    });
+  };
+
   const recordEventWithItems = () => {
+    const item_shoes: Item = {
+      id: '1',
+      name: 'boy shoes',
+      brand: 'Nike',
+      currency: 'CNY',
+      category: 'shoes',
+      locationId: '1',
+    };
     ClickstreamAnalytics.record({
       name: 'product_view',
       attributes: {
@@ -53,16 +72,7 @@ export default function App() {
         currency: 'CNY',
         price: 279.9,
       },
-      items: [
-        {
-          id: '1',
-          name: 'boy shoes',
-          brand: 'Nike',
-          currency: 'CNY',
-          category: 'shoes',
-          locationId: '1',
-        },
-      ],
+      items: [item_shoes],
     });
   };
   const setUserId = () => {
@@ -134,6 +144,10 @@ export default function App() {
           onPress={recordEventWithAttributes}
         />
         <ListItem title="recordEventWithItems" onPress={recordEventWithItems} />
+        <ListItem
+          title="recordCustomScreenViewEvents"
+          onPress={recordCustomScreenViewEvents}
+        />
         <ListItem title="setUserId" onPress={setUserId} />
         <ListItem title="setUserIdNull" onPress={setUserIdNull} />
         <ListItem title="setUserAttributes" onPress={setUserAttributes} />

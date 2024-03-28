@@ -104,4 +104,13 @@ export class ClickstreamAnalytics {
   static isNotEmpty(obj: any): boolean {
     return obj !== undefined && obj !== null && Object.keys(obj).length > 0;
   }
+
+  static readonly Event = {
+    SCREEN_VIEW: '_screen_view',
+  };
+
+  static readonly Attr = {
+    SCREEN_NAME: '_screen_name',
+    SCREEN_UNIQUE_ID: '_screen_unique_id',
+  };
 }

@@ -127,6 +127,25 @@ describe('ClickstreamAnalytics test', () => {
     );
   });
 
+  test('test record custom screen view events', () => {
+    ClickstreamAnalytics.record({
+      name: ClickstreamAnalytics.Event.SCREEN_VIEW,
+      attributes: {
+        [ClickstreamAnalytics.Attr.SCREEN_NAME]: 'HomeComponent',
+        [ClickstreamAnalytics.Attr.SCREEN_UNIQUE_ID]: '123adf',
+      },
+    });
+    expect(NativeModules.ClickstreamReactNative.record).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: ClickstreamAnalytics.Event.SCREEN_VIEW,
+        attributes: {
+          [ClickstreamAnalytics.Attr.SCREEN_NAME]: 'HomeComponent',
+          [ClickstreamAnalytics.Attr.SCREEN_UNIQUE_ID]: '123adf',
+        },
+      })
+    );
+  });
+
   test('test record event with empty event name', () => {
     ClickstreamAnalytics.record({
       name: '',
