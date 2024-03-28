@@ -17,6 +17,5 @@ jobs:
       - name: Run build ios
         run: |
           yarn
-          cd example/ios
-          pod install
-          xcodebuild -workspace ClickstreamReactNativeExample.xcworkspace -scheme ClickstreamReactNativeExample -configuration Debug -sdk iphonesimulator
+          cd example/ios && pod install && cd ..
+          yarn build:ios
