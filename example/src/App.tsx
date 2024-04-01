@@ -13,8 +13,7 @@ export default function App() {
   const initSDK = async () => {
     const res = await ClickstreamAnalytics.init({
       appId: 'shopping',
-      endpoint:
-        'http://Clicks-Inges-GMCZD4cV3Xyp-634383170.us-east-1.elb.amazonaws.com/collect',
+      endpoint: 'https://example.com/collect',
       isLogEvents: true,
       sendEventsInterval: 10000,
       isTrackScreenViewEvents: true,
