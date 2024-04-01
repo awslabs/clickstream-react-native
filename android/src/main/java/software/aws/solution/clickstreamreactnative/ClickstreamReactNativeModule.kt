@@ -82,12 +82,18 @@ class ClickstreamReactNativeModule(reactContext: ReactApplicationContext) :
         val latch = CountDownLatch(1);
         try {
             reactApplicationContext.runOnUiQueueThread {
-                ClickstreamAnalytics.init(context, configuration)
-                latch.countDown()
+                try {
+                    ClickstreamAnalytics.init(context, configuration)
+                    promise.resolve(true)
+                    isInitialized = true
+                } catch (exception: Exception) {
+                    promise.resolve(false)
+                    log.error("Clickstream SDK initialization failed with error: " + exception.message)
+                } finally {
+                    latch.countDown()
+                }
             }
             latch.await()
-            promise.resolve(true)
-            isInitialized = true
         } catch (exception: Exception) {
             promise.resolve(false)
             log.error("Clickstream SDK initialization failed with error: " + exception.message)
