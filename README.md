@@ -60,7 +60,7 @@ Your `appId` and `endpoint` are already set up in it.
 
 ### Start using
 
-#### Record events
+#### Record event
 
 Add the following code where you need to record events.
 
@@ -93,7 +93,7 @@ ClickstreamAnalytics.setUserId("userId");
 ClickstreamAnalytics.setUserId(null);
 ```
 
-#### Add user attributes
+#### Add user attribute
 
 ```typescript
 import { ClickstreamAnalytics } from '@aws/clickstream-react-native';
@@ -109,7 +109,7 @@ and current login user's attributes will be cached in disk, so the next time app
 attributes again, of course you can use the same API `ClickstreamAnalytics.setUserAttributes()` to update the current
 user's attribute when it changes.
 
-#### Add global attributes
+#### Add global attribute
 
 1. Add global attributes when initializing the SDK
 
@@ -136,7 +136,7 @@ user's attribute when it changes.
 It is recommended to set global attributes when initializing the SDK, global attributes will be included in all events
 that occur after it is set.
 
-#### Delete global attributes
+#### Delete global attribute
 
 ``` typescript
 ClickstreamAnalytics.deleteGlobalAttributes(['level','_traffic_source_medium']);
