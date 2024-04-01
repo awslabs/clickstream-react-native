@@ -5,7 +5,7 @@
   "main": ".lib/index.js",
   "module": "./lib-esm/index.js",
   "typings": "./lib-esm/index.d.ts",
-  "react-native": ".src/index.ts",
+  "react-native": "src/index.ts",
   "source": "src/index",
   "scripts": {
     "example": "yarn workspace clickstream-react-native-example start",
