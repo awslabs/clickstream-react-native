@@ -1,0 +1,21 @@
+name: React Native SDK Build for iOS
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-ios:
+    runs-on: macos-13-xl
+    steps:
+      - uses: actions/checkout@v3
+      - name: Initialize submodules
+        run: |
+          git submodule update --init
+      - name: Run build ios
+        run: |
+          yarn
+          cd example/ios && pod install && cd ..
+          yarn build:ios

@@ -1,0 +1,17 @@
+name: React Native SDK Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-rn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run build
+        run: |
+          yarn
+          yarn run build
