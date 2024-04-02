@@ -4,7 +4,7 @@
 
 Clickstream React Native SDK can help you easily collect and report events from React Native apps to AWS. This SDK is
 part of an AWS solution - [Clickstream Analytics on AWS](https://github.com/awslabs/clickstream-analytics-on-aws), which
-provisions data pipeline to ingest and process event data into AWS services such as S3, Redshift.
+provisions data pipeline to ingest and process event data into AWS services such as Amazon S3, Redshift.
 
 The SDK relies on the [Clickstream Android SDK](https://github.com/awslabs/clickstream-android)
 and [Clickstream Swift SDK](https://github.com/awslabs/clickstream-swift). Therefore, Clickstream React Native SDK also
