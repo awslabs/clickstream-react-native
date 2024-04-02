@@ -1,5 +1,5 @@
 {
-  "name": "clickstream-react-native",
+  "name": "@aws/clickstream-react-native",
   "version": "0.1.0",
   "description": "ClickstreamAnalytics React Native SDK",
   "main": ".lib/index.js",
