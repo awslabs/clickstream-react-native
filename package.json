@@ -1,6 +1,6 @@
 {
   "name": "@aws/clickstream-react-native",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "ClickstreamAnalytics React Native SDK",
   "main": ".lib/src/index.js",
   "module": "./lib-esm/src/index.js",
@@ -102,6 +102,6 @@
     "*.podspec",
     "!**/__tests__",
     "!**/.*",
-		"!**/example"
+    "!**/example"
   ]
 }
