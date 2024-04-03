@@ -1,40 +1,36 @@
 {
-  "compilerOptions": {
-    "rootDir": "src",
-    "paths": {
-      "clickstream-react-native": [
-        "./src/index"
-      ]
-    },
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "esModuleInterop": true,
-    "noImplicitAny": true,
-    "downlevelIteration": true,
-    "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
-    "lib": [
-      "es2020"
-    ],
-    "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noImplicitUseStrict": false,
-    "noStrictGenericChecks": false,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "importHelpers": true,
-    "noEmitOnError": false,
-    "declaration": true,
-    "strict": true,
-    "target": "es2020",
-    "outDir": "lib"
-  },
-  "exclude": [
-    "**/__tests__",
-    "example"
-  ]
+	"compilerOptions": {
+		"rootDir": ".",
+		"paths": {
+			"@aws/clickstream-react-native": [
+				"./src/index"
+			]
+		},
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"esModuleInterop": true,
+		"noImplicitAny": true,
+		"downlevelIteration": true,
+		"forceConsistentCasingInFileNames": true,
+		"jsx": "react",
+		"lib": [
+			"es2020"
+		],
+		"moduleResolution": "node",
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"noImplicitUseStrict": false,
+		"noStrictGenericChecks": false,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"importHelpers": true,
+		"noEmitOnError": false,
+		"declaration": true,
+		"strict": true,
+		"target": "es2020",
+		"outDir": "lib"
+	}
 }

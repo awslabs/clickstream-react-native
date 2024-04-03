@@ -7,7 +7,7 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-import { ClickstreamAnalytics, Item } from 'clickstream-react-native';
+import { ClickstreamAnalytics, Item } from '@aws/clickstream-react-native';
 
 export default function App() {
   const initSDK = async () => {
