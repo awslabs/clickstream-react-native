@@ -7,7 +7,6 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-// @ts-ignore
 import { ClickstreamAnalytics, Item } from '@aws/clickstream-react-native';
 
 export default function App() {
