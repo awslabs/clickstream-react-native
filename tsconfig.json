@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "paths": {
-      "clickstream-react-native": [
+      "@aws/clickstream-react-native": [
         "./src/index"
       ]
     },
@@ -34,7 +34,6 @@
     "outDir": "lib"
   },
   "exclude": [
-    "**/__tests__",
     "example"
   ]
 }
