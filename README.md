@@ -192,6 +192,11 @@ ClickstreamAnalytics.record({
 });
 ```
 
+#### Record screen views when using React Navigation
+Here's an [example](https://github.com/aws-samples/clickstream-sdk-samples/pull/25/files#diff-96a74db413b2f02988e5537fdbdf4f307334e8f5ef3a9999df7de3c6785af75bR344-R397) of globally logging React Native screen view events when using React Navigation 6.x
+
+For other version of React Navigation, you can refer to official documentation: [Screen tracking for analytics](https://reactnavigation.org/docs/screen-tracking/).
+
 #### Other configurations
 
 In addition to the required `appId` and `endpoint`, you can configure other information to get more customized usage
