@@ -7,7 +7,12 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-import { ClickstreamAnalytics, Item } from '@aws/clickstream-react-native';
+import {
+  ClickstreamAnalytics,
+  Item,
+  Attr,
+  Event,
+} from '@aws/clickstream-react-native';
 
 export default function App() {
   const initSDK = async () => {
@@ -20,7 +25,15 @@ export default function App() {
       isCompressEvents: false,
       sessionTimeoutDuration: 30000,
       globalAttributes: {
-        channel: 'Samsung',
+        [Attr.TRAFFIC_SOURCE_SOURCE]: 'amazon',
+        [Attr.TRAFFIC_SOURCE_MEDIUM]: 'cpc',
+        [Attr.TRAFFIC_SOURCE_CAMPAIGN]: 'summer_promotion',
+        [Attr.TRAFFIC_SOURCE_CAMPAIGN_ID]: 'summer_promotion_01',
+        [Attr.TRAFFIC_SOURCE_TERM]: 'running_shoes',
+        [Attr.TRAFFIC_SOURCE_CONTENT]: 'banner_ad_1',
+        [Attr.TRAFFIC_SOURCE_CLID]: 'amazon_ad_123',
+        [Attr.TRAFFIC_SOURCE_CLID_PLATFORM]: 'amazon_ads',
+        [Attr.APP_INSTALL_CHANNEL]: 'amazon_store',
         Class: 5,
         isTrue: true,
         Score: 24.32,
@@ -47,10 +60,10 @@ export default function App() {
 
   const recordCustomScreenViewEvents = () => {
     ClickstreamAnalytics.record({
-      name: ClickstreamAnalytics.Event.SCREEN_VIEW,
+      name: Event.SCREEN_VIEW,
       attributes: {
-        [ClickstreamAnalytics.Attr.SCREEN_NAME]: 'HomeComponent',
-        [ClickstreamAnalytics.Attr.SCREEN_UNIQUE_ID]: '123adf',
+        [Attr.SCREEN_NAME]: 'HomeComponent',
+        [Attr.SCREEN_UNIQUE_ID]: '123adf',
       },
     });
   };
@@ -68,8 +81,8 @@ export default function App() {
       name: 'product_view',
       attributes: {
         category: 'shoes',
-        currency: 'CNY',
-        price: 279.9,
+        [Attr.CURRENCY]: 'CNY',
+        [Attr.VALUE]: 279.9,
       },
       items: [item_shoes],
     });
@@ -93,7 +106,7 @@ export default function App() {
   const setGlobalAttributes = () => {
     ClickstreamAnalytics.setGlobalAttributes({});
     ClickstreamAnalytics.setGlobalAttributes({
-      channel: 'Samsung',
+      [Attr.APP_INSTALL_CHANNEL]: 'amazon_store',
       Class: 5,
       isTrue: true,
       Score: 24.32,

@@ -105,10 +105,18 @@ export class ClickstreamAnalytics {
     return obj !== undefined && obj !== null && Object.keys(obj).length > 0;
   }
 
+  /**
+   * @deprecated The static object should not be used.
+   * please update to: `import { Event } from '@aws/clickstream-react-native'`.
+   */
   static readonly Event = {
     SCREEN_VIEW: '_screen_view',
   };
 
+  /**
+   * @deprecated The static object should not be used.
+   * please update to: `import { Attr } from '@aws/clickstream-react-native'`.
+   */
   static readonly Attr = {
     SCREEN_NAME: '_screen_name',
     SCREEN_UNIQUE_ID: '_screen_unique_id',

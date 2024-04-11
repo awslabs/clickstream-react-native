@@ -10,7 +10,7 @@
  *  OR CONDITIONS OF ANY KIND, express or implied. See the License for the specific language governing permissions
  *  and limitations under the License.
  */
-import { ClickstreamAnalytics } from '../index';
+import { ClickstreamAnalytics, Attr, Event } from '../index';
 import { NativeModules } from 'react-native';
 
 jest.mock('react-native', () => {
@@ -129,18 +129,18 @@ describe('ClickstreamAnalytics test', () => {
 
   test('test record custom screen view events', () => {
     ClickstreamAnalytics.record({
-      name: ClickstreamAnalytics.Event.SCREEN_VIEW,
+      name: Event.SCREEN_VIEW,
       attributes: {
-        [ClickstreamAnalytics.Attr.SCREEN_NAME]: 'HomeComponent',
-        [ClickstreamAnalytics.Attr.SCREEN_UNIQUE_ID]: '123adf',
+        [Attr.SCREEN_NAME]: 'HomeComponent',
+        [Attr.SCREEN_UNIQUE_ID]: '123adf',
       },
     });
     expect(NativeModules.ClickstreamReactNative.record).toHaveBeenCalledWith(
       expect.objectContaining({
-        name: ClickstreamAnalytics.Event.SCREEN_VIEW,
+        name: Event.SCREEN_VIEW,
         attributes: {
-          [ClickstreamAnalytics.Attr.SCREEN_NAME]: 'HomeComponent',
-          [ClickstreamAnalytics.Attr.SCREEN_UNIQUE_ID]: '123adf',
+          [Attr.SCREEN_NAME]: 'HomeComponent',
+          [Attr.SCREEN_UNIQUE_ID]: '123adf',
         },
       })
     );
@@ -203,6 +203,35 @@ describe('ClickstreamAnalytics test', () => {
         Class: 5,
         isTrue: true,
         Score: 24.32,
+      })
+    );
+  });
+
+  test('test set traffic source in global attributes', () => {
+    ClickstreamAnalytics.setGlobalAttributes({
+      [Attr.TRAFFIC_SOURCE_SOURCE]: 'amazon',
+      [Attr.TRAFFIC_SOURCE_MEDIUM]: 'cpc',
+      [Attr.TRAFFIC_SOURCE_CAMPAIGN]: 'summer_promotion',
+      [Attr.TRAFFIC_SOURCE_CAMPAIGN_ID]: 'summer_promotion_01',
+      [Attr.TRAFFIC_SOURCE_TERM]: 'running_shoes',
+      [Attr.TRAFFIC_SOURCE_CONTENT]: 'banner_ad_1',
+      [Attr.TRAFFIC_SOURCE_CLID]: 'amazon_ad_123',
+      [Attr.TRAFFIC_SOURCE_CLID_PLATFORM]: 'amazon_ads',
+      [Attr.APP_INSTALL_CHANNEL]: 'amazon_store',
+    });
+    expect(
+      NativeModules.ClickstreamReactNative.setGlobalAttributes
+    ).toHaveBeenCalledWith(
+      expect.objectContaining({
+        [Attr.TRAFFIC_SOURCE_SOURCE]: 'amazon',
+        [Attr.TRAFFIC_SOURCE_MEDIUM]: 'cpc',
+        [Attr.TRAFFIC_SOURCE_CAMPAIGN]: 'summer_promotion',
+        [Attr.TRAFFIC_SOURCE_CAMPAIGN_ID]: 'summer_promotion_01',
+        [Attr.TRAFFIC_SOURCE_TERM]: 'running_shoes',
+        [Attr.TRAFFIC_SOURCE_CONTENT]: 'banner_ad_1',
+        [Attr.TRAFFIC_SOURCE_CLID]: 'amazon_ad_123',
+        [Attr.TRAFFIC_SOURCE_CLID_PLATFORM]: 'amazon_ads',
+        [Attr.APP_INSTALL_CHANNEL]: 'amazon_store',
       })
     );
   });
