@@ -12,4 +12,4 @@
  */
 
 export { ClickstreamAnalytics } from './ClickstreamAnalytics';
-export { Item } from './types/Analytics';
+export { Item, Attr, Event } from './types/Analytics';
