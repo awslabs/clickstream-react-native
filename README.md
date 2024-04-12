@@ -173,7 +173,7 @@ ClickstreamAnalytics.record({
   name: 'view_item',
   attributes: {
     [Attr.VALUE]: 99,
-		[Attr.CURRENCY]: 'USD',
+    [Attr.CURRENCY]: 'USD',
     event_category: 'recommended',
   },
   items: [itemBook],
