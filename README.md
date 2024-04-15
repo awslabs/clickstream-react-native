@@ -128,7 +128,7 @@ user's attribute when it changes.
         [Attr.TRAFFIC_SOURCE_CONTENT]: 'banner_ad_1',
         [Attr.TRAFFIC_SOURCE_CLID]: 'amazon_ad_123',
         [Attr.TRAFFIC_SOURCE_CLID_PLATFORM]: 'amazon_ads',
-   			[Attr.APP_INSTALL_CHANNEL]: 'amazon_store',
+        [Attr.APP_INSTALL_CHANNEL]: 'amazon_store',
       },
    });
    ```
@@ -173,7 +173,7 @@ ClickstreamAnalytics.record({
   name: 'view_item',
   attributes: {
     [Attr.VALUE]: 99,
-		[Attr.CURRENCY]: 'USD',
+    [Attr.CURRENCY]: 'USD',
     event_category: 'recommended',
   },
   items: [itemBook],
