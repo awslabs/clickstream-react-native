@@ -69,6 +69,6 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "software.aws.solution:clickstream:0.13.0"
+    implementation "software.aws.solution:clickstream:0.14.0"
 }
 
