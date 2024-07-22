@@ -3,12 +3,12 @@ PODS:
     - Amplify/Default (= 1.30.3)
   - Amplify/Default (1.30.3)
   - boost (1.83.0)
-  - clickstream-react-native (0.1.0):
-    - clickstream-react-native/Clickstream (= 0.1.0)
+  - clickstream-react-native (0.3.0):
+    - clickstream-react-native/Clickstream (= 0.3.0)
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
-  - clickstream-react-native/Clickstream (0.1.0):
+  - clickstream-react-native/Clickstream (0.3.0):
     - Amplify (= 1.30.3)
     - glog
     - GzipSwift (= 5.1.1)
@@ -1332,7 +1332,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Amplify: 516e5da5f256f62841b6bc659e1644bc999d7b6e
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
-  clickstream-react-native: ff710a895a3d523452c6850666062b489e9e035f
+  clickstream-react-native: 7a42d0ab66e67cd782f2fd498e5000838ea4defc
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
   FBLazyVector: 56e0e498dbb513b96c40bac6284729ba4e62672d
@@ -1398,4 +1398,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: daadd1904a2d3fd60284a76fa1afe9c56098c16f
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.15.2
