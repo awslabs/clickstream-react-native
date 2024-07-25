@@ -301,24 +301,24 @@ ClickstreamAnalytics.enable();
 
 ## How to integrate and test locally
 
-Clone this repository locally and execute the following script to generate `aws-clickstream-react-native-0.3.0.tgz` zip
+Clone this repository locally and execute the following script to generate `aws-clickstream-react-native-0.3.1.tgz` zip
 package, which will be located in the project root folder.
 
 ```bash
 cd clickstream-react-native && yarn && yarn run pack
 ```
 
-Copy the `aws-clickstream-react-native-0.3.0.tgz` into your project, then execute the script in your project root folder to
+Copy the `aws-clickstream-react-native-0.3.1.tgz` into your project, then execute the script in your project root folder to
 install the SDK.
 
 ```bash
-yarn add ./aws-clickstream-react-native-0.3.0.tgz
+yarn add ./aws-clickstream-react-native-0.3.1.tgz
 ```
 
-**Note**: Please correct the SDK version and change the path to where the `aws-clickstream-react-native-0.3.0.tgz` file is
+**Note**: Please correct the SDK version and change the path to where the `aws-clickstream-react-native-0.3.1.tgz` file is
 located.
 
-You can also find the `aws-clickstream-react-native-0.3.0.tgz` file in
+You can also find the `aws-clickstream-react-native-0.3.1.tgz` file in
 the [Release](https://github.com/awslabs/clickstream-react-native/releases) page.
 
 ### Test
